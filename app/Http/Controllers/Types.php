@@ -9,6 +9,7 @@ use App\Http\Requests\TypeRequests\addRequest;
 use App\Http\Requests\TypeRequests\deleteRequest;
 use App\Http\Requests\TypeRequests\updateRequest;
 
+
 class Types extends Controller {
     
     public function all() {
@@ -31,7 +32,7 @@ class Types extends Controller {
         return $types;
     }
 
-    public function update(addRequest $request, $id)
+    public function update(updateRequest $request, $id)
     {
         $types = Type::find($id);
        
@@ -58,8 +59,12 @@ class Types extends Controller {
     //     }
     // }
 
-    public function delete(deleteRequest $request, $id) {
-        Type::findOrFail($id)->delete();
+    //replace Request parameter with deleteRequest
+    //in deleteRequest, find a way to validate $id route
+    public function delete(deleteRequest $request) {
+
+       
+        Type::findOrFail($request->input('id'))->delete();
 
         return 204;
     }

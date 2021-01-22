@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
 use App\Stock;
+use App\Product;
 use App\SaleProduct;
 use Illuminate\Http\Request;
+use App\Http\Requests\SaleRequests\addRequest;
 
 class Sales extends Controller {
 
@@ -21,7 +22,7 @@ class Sales extends Controller {
 
     }
 
-    public function store(Request $request) {
+    public function store(addRequest $request) {
 
         
 
@@ -39,7 +40,7 @@ class Sales extends Controller {
         return $saleProduct;
     }
 
-    public function update(Request $request, $id) {
+    public function update(addRequest $request, $id) {
 
         $saleProduct = SaleProduct::find($id);
         $stock = Stock::where('product_id', $request->product_id)->first();

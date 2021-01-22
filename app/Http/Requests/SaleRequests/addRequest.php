@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\TypeRequests;
+namespace App\Http\Requests\SaleRequests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
@@ -24,11 +24,11 @@ class addRequest extends FormRequest
      * @return array
      */
 
-     // me mujt me bo metod ne kontrollerin e Type. edhe me thirr veq kur mduhet me validu 'type'.
     public function rules()
     {
         return [
-            'type' => 'required|unique:types|min:3|max:200'
+            'product_id'  => 'required|unique:saleProduct|numeric',
+            'quantity' => 'required|numeric'
         ];
     }
 
@@ -38,11 +38,12 @@ class addRequest extends FormRequest
    
     }
 
-    public function messages()
-    {
+    public function messages() {
         return [
-            'type.required' => 'A type is required!',
-            'type.unique' => 'Type cannot be a duplicate!',
+            'product_id.required' => 'A product id is required!',
+            'product_id.unique' => 'The product id cannot be a duplicate!',
+            'quantity.required' => 'Id of quantity is required!',
+            'quantity.numeric' => 'Quantity should be numeric'
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\TypeRequests;
 
+use App\Type;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -23,17 +24,33 @@ class deleteRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            //'id' => 'required|max:50|exists:'.(new Type)->getTable().',id,deleted_at,NULL'
-            'id' => 'required'
+            'id' => 'required|numeric|exists::'.(new Type)->getTable().',id',
+            
         ];
     }
+
+    // public function all($keys = null)
+    // {
+    //     $data = parent::all($keys);
+    //     $data['id'] = $this->route()[2]['id'];
+    //     return $data;
+    // }
+    
 
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json($validator->errors(), 422));
    
     }
-}
+
+    public function messages()
+    {
+        return [
+            'id.required' => 'An id is required',
+            'id.numeric' => 'Id should be a number',
+            'id.exists' => 'Id does not exist'
+        ];
+    }
+} 

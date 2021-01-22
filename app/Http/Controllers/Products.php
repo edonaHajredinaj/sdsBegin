@@ -29,7 +29,7 @@ class Products extends Controller
         return $product;
     }
 
-    public function update(Request $request, $id) {
+    public function update(addRequest $request, $id) {
 
         $product = Product::find($id);
 

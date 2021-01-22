@@ -26,8 +26,7 @@ class updateRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'required|unique|min:3|max:200',
-           // 'id' => 'required'
+            'type' => 'required|unique:types|min:3|max:200'
         ];
     }
 
@@ -35,5 +34,13 @@ class updateRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json($validator->errors(), 422));
    
+    }
+
+    public function messages()
+    {
+        return [
+            'type.required' => 'A type is required!',
+            'type.unique' => 'Type cannot be a duplicate!',
+        ];
     }
 }

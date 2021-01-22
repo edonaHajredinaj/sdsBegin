@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Stock;
 use Illuminate\Http\Request;
+use App\Http\Requests\StockRequests\addRequest;
 
 class Stocks extends Controller
 {
@@ -17,7 +18,7 @@ class Stocks extends Controller
         return Stock::findOrFail($id);
     }
 
-    public function store(Request $request) {
+    public function store(addRequest $request) {
         $stock = new Stock;
 
         $stock->product_id = $request->product_id;
@@ -29,7 +30,7 @@ class Stocks extends Controller
     }
 
 
-    public function update(Request $request, $id) {
+    public function update(addRequest $request, $id) {
         $stock = Stock::find($id);
 
         if($request->has('product_id')) {

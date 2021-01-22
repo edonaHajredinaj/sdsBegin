@@ -10,6 +10,13 @@ class Type extends Model
     protected $fillable = ['type'];
 
     protected $table = 'types';
+
+    // public function resolveRouteBinding($value)
+    // {
+    //     return $this->where('id', $value)
+    //         ->orWhere('slug', $value)
+    //         ->first();
+    // }
     
     public function product() {
         

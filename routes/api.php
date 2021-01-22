@@ -18,7 +18,7 @@ Route::get('types', 'Types@all');
 Route::get('types/{id}', 'Types@get');
 Route::post('types', 'Types@store');
 Route::put('types/{id}', 'Types@update');
-Route::delete('types/{id}', 'Types@delete');
+Route::delete('types', 'Types@delete');
 
 
 Route::get('products', 'Products@all');
