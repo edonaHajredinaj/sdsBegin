@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\TypeRequests;
 
+use App\Type;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -26,6 +27,7 @@ class updateRequest extends FormRequest
     public function rules()
     {
         return [
+            'id' => 'required|numeric|exists:'.(new Type)->getTable().',id',
             'type' => 'required|unique:types|min:3|max:200'
         ];
     }
@@ -39,6 +41,10 @@ class updateRequest extends FormRequest
     public function messages()
     {
         return [
+            'id.required' => 'An id is required',
+            'id.numeric' => 'Id should be a number',
+            'id.exists' => 'Id does not exist',
+
             'type.required' => 'A type is required!',
             'type.unique' => 'Type cannot be a duplicate!',
         ];

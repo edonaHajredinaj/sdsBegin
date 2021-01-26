@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('types', 'Types@all');
 Route::get('types/{id}', 'Types@get');
 Route::post('types', 'Types@store');
-Route::put('types/{id}', 'Types@update');
+Route::put('types', 'Types@update');
 Route::delete('types', 'Types@delete');
 
 

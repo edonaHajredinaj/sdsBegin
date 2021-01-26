@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class deleteRequest extends FormRequest
+class getRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,26 +24,27 @@ class deleteRequest extends FormRequest
      *
      * @return array
      */
-    public function rules() {
+    public function rules()
+    {
         return [
-            'id' => 'required|numeric|exists:'.(new Type)->getTable().',id.deleted_at,NULL',
-            // ->where('id', '[0-9]+');
+            'id' => 'required|numeric|exists:'.(new Type)->getTable().',id',
+            // ->where('id', '[0-9]+')
         ];
     }
 
-    // public function all($keys = null)
-    // {
-    //     $data = parent::all($keys);
-    //     $data['id'] = $this->route()[2]['id'];
-    //     return $data;
-    // }
-    
     // public function all($keys = null)
     // {
     //     $attributes = parent::all($keys);
     //     $attributes['id'] = $this->route()[2]['id'];
     //     return $attributes;
     // }
+
+    public function all($keys = null)
+{
+    $data = parent::all($keys);
+    $data['id'] =  $this->route('id');
+    return $data;
+}
 
     protected function failedValidation(Validator $validator)
     {
@@ -59,4 +60,4 @@ class deleteRequest extends FormRequest
             'id.exists' => 'Id does not exist'
         ];
     }
-} 
+}

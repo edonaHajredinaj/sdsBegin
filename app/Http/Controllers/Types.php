@@ -6,6 +6,7 @@ use App\Type;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Validator;
 use App\Http\Requests\TypeRequests\addRequest;
+use App\Http\Requests\TypeRequests\getRequest;
 use App\Http\Requests\TypeRequests\deleteRequest;
 use App\Http\Requests\TypeRequests\updateRequest;
 
@@ -17,9 +18,9 @@ class Types extends Controller {
         return Type::all();
     }
 
-    public function get($id) {
+    public function get(getRequest $request, $id) {
 
-        return Type::findOrFail($id);
+        return Type::findOrFail($request->input('id'));
     }
 
     public function store(addRequest $request) {
@@ -32,9 +33,9 @@ class Types extends Controller {
         return $types;
     }
 
-    public function update(updateRequest $request, $id)
+    public function update(updateRequest $request)
     {
-        $types = Type::find($id);
+        $types = Type::find($request->input('id'));
        
         if($request->has('type')) {
             $types->type = $request->type;
@@ -66,7 +67,7 @@ class Types extends Controller {
        
         Type::findOrFail($request->input('id'))->delete();
 
-        return 204;
+        return response()->json("The product with the id of: " . $request->input('id') . " was deleted.");
     }
 
     // protected function validateAttributes() {

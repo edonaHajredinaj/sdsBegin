@@ -18,13 +18,12 @@ class Sales extends Controller {
 
     public function get($id) {
         
+        
         return SaleProduct::findOrFail($id);
 
     }
 
     public function store(addRequest $request) {
-
-        
 
             $saleProduct = new SaleProduct();
             $saleProduct->product_id = $request->product_id;
