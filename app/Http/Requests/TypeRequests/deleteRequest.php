@@ -26,7 +26,7 @@ class deleteRequest extends FormRequest
      */
     public function rules() {
         return [
-            'id' => 'required|numeric|exists:'.(new Type)->getTable().',id.deleted_at,NULL',
+            'id' => 'required|numeric|exists:'.(new Type)->getTable().',id',
             // ->where('id', '[0-9]+');
         ];
     }

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\TypeRequests;
+namespace App\Http\Requests\ProductRequests;
 
-use App\Type;
+use App\Product;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class updateRequest extends FormRequest
+class deleteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,8 +27,7 @@ class updateRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|numeric|exists:'.(new Type)->getTable().',id',
-            'type' => 'required|string|unique:types|min:3|max:200'
+            'id' => 'required|numeric|exists:'.(new Product)->getTable().',id,deleted_at,NULL'
         ];
     }
 
@@ -43,11 +42,7 @@ class updateRequest extends FormRequest
         return [
             'id.required' => 'An id is required',
             'id.numeric' => 'Id should be a number',
-            'id.exists' => 'Id does not exist',
-
-            'type.required' => 'A type is required!',
-            'type.string' => 'Type has to be withing a-z range!',
-            'type.unique' => 'Type cannot be a duplicate!',
+            'id.exists' => 'Id does not exist'
         ];
     }
 }
