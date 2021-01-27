@@ -30,7 +30,9 @@ class Types extends Controller {
         $types->type = $request->type;
         $types->save();
 
-        return $types;
+        //return $types;
+        return response()->json("The type with the id of: " 
+        . $request->input('id') . " was saved " . $types);
     }
 
     public function update(updateRequest $request)
@@ -63,11 +65,11 @@ class Types extends Controller {
     //replace Request parameter with deleteRequest
     //in deleteRequest, find a way to validate $id route
     public function delete(deleteRequest $request) {
-
-       
+    
         Type::findOrFail($request->input('id'))->delete();
 
-        return response()->json("The product with the id of: " . $request->input('id') . " was deleted.");
+        //return 204;
+        return response()->json("The type with the id of: " .$request->input('id')." was deleted.");
     }
 
     // protected function validateAttributes() {
