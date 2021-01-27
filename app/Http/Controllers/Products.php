@@ -48,7 +48,7 @@ class Products extends Controller
         return $product;
     }    
 
-    public function delete(Request $request, $id) {
+    public function delete(deleteRequest $request) {
 
         // $request->validate
         //([

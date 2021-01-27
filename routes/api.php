@@ -24,8 +24,8 @@ Route::delete('types', 'Types@delete');
 Route::get('products', 'Products@all');
 Route::get('products/{id}', 'Products@get');
 Route::post('products', 'Products@store');
-Route::put('products/{id}', 'Products@update');
-Route::delete('products/{id}', 'Products@delete');
+Route::put('products', 'Products@update');
+Route::delete('products', 'Products@delete');
 
 
 Route::get('sales', 'Sales@all');

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Requests\TypeRequests;
+namespace App\Http\Requests\ProductRequests;
 
-use App\Type;
+use App\Product;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -24,26 +24,12 @@ class deleteRequest extends FormRequest
      *
      * @return array
      */
-    public function rules() {
+    public function rules()
+    {
         return [
-            'id' => 'required|numeric|exists:'.(new Type)->getTable().',id',
-            // ->where('id', '[0-9]+');
+            'id' => 'required|numeric|exists:'.(new Product)->getTable().',id,deleted_at,NULL'
         ];
     }
-
-    // public function all($keys = null)
-    // {
-    //     $data = parent::all($keys);
-    //     $data['id'] = $this->route()[2]['id'];
-    //     return $data;
-    // }
-    
-    // public function all($keys = null)
-    // {
-    //     $attributes = parent::all($keys);
-    //     $attributes['id'] = $this->route()[2]['id'];
-    //     return $attributes;
-    // }
 
     protected function failedValidation(Validator $validator)
     {
@@ -59,4 +45,4 @@ class deleteRequest extends FormRequest
             'id.exists' => 'Id does not exist'
         ];
     }
-} 
+}
