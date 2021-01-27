@@ -38,5 +38,5 @@ Route::delete('sales/{id}', 'Sales@delete');
 Route::get('stocks', 'Stocks@all');
 Route::get('stocks/{id}', 'Stocks@get');
 Route::post('stocks', 'Stocks@store');
-Route::put('stocks/{id}', 'Stocks@update');
-Route::delete('stocks/{id}', 'Stocks@delete');
+Route::put('stocks', 'Stocks@update');
+Route::delete('stocks', 'Stocks@delete');

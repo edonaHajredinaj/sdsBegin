@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Validation\Validator;
 use App\Http\Requests\ProductRequests\addRequest;
+use App\Http\Requests\ProductRequests\getRequest;
+use App\Http\Requests\ProductRequests\deleteRequest;
+use App\Http\Requests\ProductRequests\updateRequest;
 
 class Products extends Controller
 {
@@ -12,8 +17,8 @@ class Products extends Controller
         return Product::all();
     }
 
-    public function get($id) {
-        return Product::findOrFail($id);
+    public function get(getRequest $request, $id) {
+        return Product::findOrFail($request->input('id'));
     }
 
     public function store(addRequest $request) {
@@ -24,14 +29,16 @@ class Products extends Controller
         $product->type_id = $request->type_id;
         $product->price = $request->price;
 
-        $product->save($this->validateAttributes());
+        $product->save();
 
-        return $product;
+        return json_encode($product);
+        //return $product;
+        //return response()->json("The product was saved as: ". $request->input('name') . " with the id of: $product->id " );
     }
 
-    public function update(addRequest $request, $id) {
+    public function update(updateRequest $request) {
 
-        $product = Product::find($id);
+        $product = Product::findOrFail($request->input('id'));
 
         if($request->has('name')) {
             $product->name = $request->name;
@@ -45,7 +52,8 @@ class Products extends Controller
 
         $product->update();
 
-        return $product;
+        //return responseJson(Response::HTTP_OK, $product);
+        return json_encode($product);
     }    
 
     public function delete(deleteRequest $request) {
@@ -53,11 +61,12 @@ class Products extends Controller
         // $request->validate
         //([
                //'id' => 'required |max:50|exists:'.(new Product)->getTable().',id,deleted_at,NULL'
-        // ]); 
+        // ]);
 
-        Product::findOrFail($id)->delete();
+        Product::findOrFail($request->input('id'))->delete();
         
-        return response()->json("The product with the id of: $id was deleted.");
+        return response()->json("The type with the id of: " . $request->input('id') . " was deleted.");
+        //return response()->json("The product with the id of: $id was deleted.");
     }
 
     // protected function validateAttributes() {

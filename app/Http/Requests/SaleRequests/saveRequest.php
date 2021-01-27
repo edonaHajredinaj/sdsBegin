@@ -2,11 +2,12 @@
 
 namespace App\Http\Requests\SaleRequests;
 
+use App\Product;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class addRequest extends FormRequest
+class saveRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,12 +24,11 @@ class addRequest extends FormRequest
      *
      * @return array
      */
-
     public function rules()
     {
         return [
-            'product_id'  => 'required|unique:saleProduct|numeric',
-            'quantity' => 'required|numeric'
+            'product_id'  => 'required|unique:saleProduct|numeric|exists:'.(new Product)->getTable().',id,deleted_at,NULL',
+            'quantity' => 'required|min:1|numeric',
         ];
     }
 
@@ -42,8 +42,12 @@ class addRequest extends FormRequest
         return [
             'product_id.required' => 'A product id is required!',
             'product_id.unique' => 'The product id cannot be a duplicate!',
+            'product_id.numeric' => 'Product id must be a number',
+            'product_id.exists' => 'Product id has been deleted!',
+
             'quantity.required' => 'Id of quantity is required!',
-            'quantity.numeric' => 'Quantity should be numeric'
+            'quantity.numeric' => 'Quantity should be numeric!',
+            'quantity.min' => 'Error: Sales cannot be lower than 1!',
         ];
     }
 }

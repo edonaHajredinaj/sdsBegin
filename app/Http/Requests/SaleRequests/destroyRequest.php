@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Requests\StockRequests;
+namespace App\Http\Requests\SaleRequests;
 
+use App\SaleProduct;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class addRequest extends FormRequest
+class destroyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +27,7 @@ class addRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_id'  => 'required|unique:stocks|numeric',
-            'quantity' => 'required|numeric'
+            'id' => 'required|numeric|exists:'.(new SaleProduct)->getTable().',id,deleted_at,NULL'
         ];
     }
 
@@ -39,8 +39,9 @@ class addRequest extends FormRequest
     public function messages()
     {
         return [
-            'product_id.required' => 'A product id is required!',
-            'product_id.unique' => 'The product id cannot be a duplicate!',
+            'id.required' => 'Id is required',
+            'id.numeric' => 'Id should be a number',
+            'id.exists' => 'Id does not exist'
         ];
     }
 }
