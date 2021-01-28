@@ -2,7 +2,11 @@
 
 namespace App\Http\Requests\SaleRequests;
 
+use App\SaleProduct;
+//use App\Sale;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class getRequest extends FormRequest
 {
@@ -13,7 +17,7 @@ class getRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +28,21 @@ class getRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'id' => 'required|numeric|exists:'. (new SaleProduct)->getTable().',id,deleted_at,NULL'
+        ];
+    }
+
+    public function failedValidation(Validator $validator) 
+    {
+        throw new HttpResponseException(response()->json($validator->errors(), 422));
+    }
+
+    public function messages() 
+    {
+        return [
+            'id.required' => 'Sale id is required',
+            'id.numeric' => 'Id must be numeric',
+            'id.exists' => 'Id does not exist!',
         ];
     }
 }

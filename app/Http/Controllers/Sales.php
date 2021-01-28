@@ -26,6 +26,7 @@ class Sales extends Controller {
     public function store(saveRequest $request) 
     {
         $saleProduct = new SaleProduct();
+        
         $saleProduct->product_id = $request->product_id;
         $saleProduct->quantity = $request->quantity;
          
@@ -79,17 +80,15 @@ class Sales extends Controller {
     //po fshihet ne 'sale_products' tabelen po nuk po rritet quantity ne 'stocks'.
     public function delete(destroyRequest $request) 
     {
-
-        $saleProduct = SaleProduct::find($request->input('id'));
+        $saleProduct = SaleProduct::findOrFail($request->input('id'));
         
         //me kthy produktin nstock kur tfshihet sale
         $stock = Stock::where('product_id', $saleProduct->product_id)->first();
-        $stock->quantity = $stock->quantity + (double)$saleProduct->quantity;
+        //$stock->quantity = $stock->quantity + (double)$saleProduct->quantity;
         //dd($saleProduct->quantity);
-        //$stock->increment('quantity', $saleProduct->quantity);
-       
+        $stock->increment('quantity', $saleProduct->quantity);
         $saleProduct->delete();
-        $saleProduct->update();
+
     	return response()->json("The bill was deleted.");
     }
 

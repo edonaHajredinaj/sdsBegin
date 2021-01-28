@@ -56,17 +56,11 @@ class Products extends Controller
         return json_encode($product);
     }    
 
-    public function delete(deleteRequest $request) {
-
-        // $request->validate
-        //([
-               //'id' => 'required |max:50|exists:'.(new Product)->getTable().',id,deleted_at,NULL'
-        // ]);
-
+    public function delete(deleteRequest $request) 
+    {
         Product::findOrFail($request->input('id'))->delete();
-        
-        return response()->json("The type with the id of: " . $request->input('id') . " was deleted.");
-        //return response()->json("The product with the id of: $id was deleted.");
+           
+        return response()->json("The product with the id of: " . $request->input('id') . " was deleted.");
     }
 
     // protected function validateAttributes() {

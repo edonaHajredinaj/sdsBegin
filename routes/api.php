@@ -28,15 +28,14 @@ Route::put('products', 'Products@update');
 Route::delete('products', 'Products@delete');
 
 
-Route::get('sales', 'Sales@all');
-Route::get('sales/{id}', 'Sales@get');
-Route::post('sales', 'Sales@store');
-Route::put('sales/{id}', 'Sales@update');
-Route::delete('sales/{id}', 'Sales@delete');
-
-
 Route::get('stocks', 'Stocks@all');
 Route::get('stocks/{id}', 'Stocks@get');
 Route::post('stocks', 'Stocks@store');
 Route::put('stocks', 'Stocks@update');
 Route::delete('stocks', 'Stocks@delete');
+
+Route::get('sales', 'Sales@all');
+Route::get('sales/{id}', 'Sales@get');
+Route::post('sales', 'Sales@store');
+Route::put('sales', 'Sales@update');
+Route::delete('sales', 'Sales@delete');

@@ -27,7 +27,7 @@ class saveRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_id'  => 'required|unique:saleProduct|numeric|exists:'.(new Product)->getTable().',id,deleted_at,NULL',
+            'product_id'  => 'required|numeric|exists:'.(new Product)->getTable().',id,deleted_at,NULL',
             'quantity' => 'required|min:1|numeric',
         ];
     }
@@ -41,7 +41,6 @@ class saveRequest extends FormRequest
     public function messages() {
         return [
             'product_id.required' => 'A product id is required!',
-            'product_id.unique' => 'The product id cannot be a duplicate!',
             'product_id.numeric' => 'Product id must be a number',
             'product_id.exists' => 'Product id has been deleted!',
 

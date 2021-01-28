@@ -46,7 +46,7 @@ class updateRequest extends FormRequest
             'id.exists' => 'Id does not exist',
 
             'type.required' => 'A type is required!',
-            'type.string' => 'Type has to be withing a-z range!',
+            'type.string' => 'Type has to be within a-z range!',
             'type.unique' => 'Type cannot be a duplicate!',
         ];
     }

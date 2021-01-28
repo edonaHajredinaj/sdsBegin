@@ -53,7 +53,7 @@ class addRequest extends FormRequest
             'type.exists' => 'This id has been deleted, therefore does not exist',
 
             'price' => 'A price is required for the product',
-            'price.numeric' => 'Price field mm=ust be a number!'
+            'price.numeric' => 'Price field must be a number!'
         ];
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class addRequest extends FormRequest
+class saveRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,8 +27,8 @@ class addRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_id'  => 'required|unique:stocks|numeric|exists:'.(new Product)->getTable().'id,deleted_at,NULL',
-            'quantity' => 'required|numeric|min:0'
+            'product_id'  => 'required|unique:stocks|numeric|exists:'.(new Product)->getTable().',id,deleted_at,NULL',
+            'quantity' => 'required|numeric|min:0',
         ];
     }
 
@@ -43,7 +43,7 @@ class addRequest extends FormRequest
             'product_id.required' => 'A product id is required!',
             'product_id.unique' => 'The product id cannot be a duplicate!',
             'product_id.numeric' => 'Product id must be a number!',
-            'product_id.exists' => 'Product does not exist in Product',
+            'product_id.exists' => 'This id does not exist in Product',
 
             'quantity.required' => 'Quantity of product is required',
             'quantity.numeric' => 'Quantity must be an integer!',

@@ -41,7 +41,7 @@ class Stocks extends Controller
     }
 
     public function update(updateRequest $request) {
-        $stock = Stock::find($id);
+        $stock = Stock::findOrFail($request->input('id'));
 
         if($request->has('product_id')) {
             $stock->product_id = $request->product_id;
