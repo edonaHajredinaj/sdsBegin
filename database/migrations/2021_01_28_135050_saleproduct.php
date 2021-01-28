@@ -21,6 +21,7 @@ class Saleproduct extends Migration
             $table->softDeletes();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
+        //komentt
     }
 
     /**
