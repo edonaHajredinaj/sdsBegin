@@ -34,8 +34,24 @@ Route::post('stocks', 'Stocks@store');
 Route::put('stocks', 'Stocks@update');
 Route::delete('stocks', 'Stocks@delete');
 
+
 Route::get('sales', 'Sales@all');
 Route::get('sales/{id}', 'Sales@get');
 Route::post('sales', 'Sales@store');
 Route::put('sales', 'Sales@update');
 Route::delete('sales', 'Sales@delete');
+
+
+Route::group([
+
+    'middleware' => 'api',
+    'prefix' => 'auth'
+
+], function ($router) {
+
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('me', 'AuthController@me');
+    //Route::post('register', 'Authcontroller@register');
+});
