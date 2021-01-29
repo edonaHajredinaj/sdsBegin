@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\ProductRequests;
+namespace App\Http\Requests\StockRequests;
 
 use App\Product;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class getRequest extends FormRequest
+class saveRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,8 +27,8 @@ class getRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|numeric|exists:'.(new Product)->getTable().',id,deleted_at,NULL'
-           //Rule::exists('products', 'id')->whereNull('deleted_at')' //dis doesnt werk werk werk
+            'product_id'  => 'required|unique:stocks|numeric|exists:'.(new Product)->getTable().',id,deleted_at,NULL',
+            'quantity' => 'required|numeric|min:0',
         ];
     }
 
@@ -40,9 +40,14 @@ class getRequest extends FormRequest
     public function messages()
     {
         return [
-            'id.required' => 'Id is required',
-            'id.numeric' => 'Id should be a number',
-            'id.exists' => 'Id does not exist'
+            'product_id.required' => 'A product id is required!',
+            'product_id.unique' => 'The product id cannot be a duplicate!',
+            'product_id.numeric' => 'Product id must be a number!',
+            'product_id.exists' => 'This id does not exist in Product',
+
+            'quantity.required' => 'Quantity of product is required',
+            'quantity.numeric' => 'Quantity must be an integer!',
+            'quantity.min' => 'Quantity cannot be lower than 0',
         ];
     }
 }

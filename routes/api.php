@@ -25,18 +25,33 @@ Route::get('products', 'Products@all');
 Route::get('products/{id}', 'Products@get');
 Route::post('products', 'Products@store');
 Route::put('products', 'Products@update');
-Route::delete('products/{id}', 'Products@delete');
-
-
-Route::get('sales', 'Sales@all');
-Route::get('sales/{id}', 'Sales@get');
-Route::post('sales', 'Sales@store');
-Route::put('sales/{id}', 'Sales@update');
-Route::delete('sales/{id}', 'Sales@delete');
+Route::delete('products', 'Products@delete');
 
 
 Route::get('stocks', 'Stocks@all');
 Route::get('stocks/{id}', 'Stocks@get');
 Route::post('stocks', 'Stocks@store');
-Route::put('stocks/{id}', 'Stocks@update');
-Route::delete('stocks/{id}', 'Stocks@delete');
+Route::put('stocks', 'Stocks@update');
+Route::delete('stocks', 'Stocks@delete');
+
+
+Route::get('sales', 'Sales@all');
+Route::get('sales/{id}', 'Sales@get');
+Route::post('sales', 'Sales@store');
+Route::put('sales', 'Sales@update');
+Route::delete('sales', 'Sales@delete');
+
+
+Route::group([
+
+    'middleware' => 'api',
+    'prefix' => 'auth'
+
+], function ($router) {
+
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('me', 'AuthController@me');
+    //Route::post('register', 'Authcontroller@register');
+});

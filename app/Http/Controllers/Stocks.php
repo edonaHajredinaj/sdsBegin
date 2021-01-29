@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Stock;
 use Illuminate\Http\Request;
-use App\Http\Requests\StockRequests\addRequest;
+use App\Http\Requests\StockRequests\getRequest;
+use App\Http\Requests\StockRequests\saveRequest;
+use App\Http\Requests\StockRequests\updateRequest;
+use App\Http\Requests\StockRequests\destroyRequest;
 
 class Stocks extends Controller
 {
@@ -13,10 +16,10 @@ class Stocks extends Controller
         return Stock::all();
     }
 
-    public function get($id) {
+    public function get(getRequest $request, $id) {
         
         // $product = Product::where('id', $stock->product_id);
-        return Stock::findOrFail($id);
+        return Stock::findOrFail($request->input('id'));
     }
     // public function showCategories($id)    {       
     //      $category_name = Categories::find($id);        
@@ -26,7 +29,7 @@ class Stocks extends Controller
     //     return view('category_products', compact('products', 'product_images', 'categories', 'category_name'));    
     //}
 
-    public function store(addRequest $request) {
+    public function store(saveRequest $request) {
         $stock = new Stock;
 
         $stock->product_id = $request->product_id;
@@ -34,13 +37,11 @@ class Stocks extends Controller
 
         $stock->save();
 
-        return $stock;
+        return json_encode($stock);
     }
-    
 
-
-    public function update(addRequest $request, $id) {
-        $stock = Stock::find($id);
+    public function update(updateRequest $request) {
+        $stock = Stock::findOrFail($request->input('id'));
 
         if($request->has('product_id')) {
             $stock->product_id = $request->product_id;
@@ -52,7 +53,7 @@ class Stocks extends Controller
         
         $stock->update();
 
-        return $stock;
+        return json_encode($stock);
     }
     
 //     public function update(Request $request){
@@ -78,10 +79,10 @@ class Stocks extends Controller
     //     return $stock;
     // }
 
-    public function delete(Request $request, $id) {
+    public function delete(destroyRequest $request) {
         
-        Stock::find($id)->delete();
+        Stock::findOrFail($request->input('id'))->delete();
         
-        return response()->json("The stock was deleted.");
+        return response()->json("The stock with id of: ". $request->input('id') ." was deleted.");
     }
 }

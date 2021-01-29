@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\ProductRequests;
 
+use App\Type;
 use App\Product;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
@@ -28,9 +29,9 @@ class updateRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|numeric|exists:'.(new Product)->getTable().',id',
-            'name' => 'required|string|',
-            'type_id' => 'required|numeric',
+            'id' => 'required|numeric|exists:'.(new Product)->getTable().',id,deleted_at,NULL',
+            'name' => 'required|string|unique:products',
+            'type_id' => 'required|numeric|exists:'.(new Type)->getTable().',id',
             'price' => 'required|numeric'
         ];
     }
@@ -51,9 +52,11 @@ class updateRequest extends FormRequest
 
             'name.required' => 'A product name is required',
             'name.string' => 'Name of product should only contain letters a-z',
+            'name.unique' => 'Name cannot be a duplicate!',
 
             'type_id.required' => 'A type id is required!',
             'type_id.numeric' => 'Type id has to be a number!',
+            'type_id.exists' => 'Id of type does not exist',
 
             'price.required' => 'A price is required for the product',
             'price.numeric' => 'Price field mm=ust be a number!'

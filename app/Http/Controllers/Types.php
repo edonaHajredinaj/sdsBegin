@@ -31,8 +31,7 @@ class Types extends Controller {
         $types->save();
 
         //return $types;
-        return response()->json("The type with the id of: " 
-        . $request->input('id') . " was saved " . $types);
+        return json_encode($types);
     }
 
     public function update(updateRequest $request)
@@ -44,7 +43,8 @@ class Types extends Controller {
         }
         $types->update();
 
-        return $types;
+        return json_encode($types);
+        //return $types;
     }
 
     //update method 3: besart - works
@@ -62,14 +62,12 @@ class Types extends Controller {
     //     }
     // }
 
-    //replace Request parameter with deleteRequest
-    //in deleteRequest, find a way to validate $id route
     public function delete(deleteRequest $request) {
     
         Type::findOrFail($request->input('id'))->delete();
 
         //return 204;
-        return response()->json("The type with the id of: " .$request->input('id')." was deleted.");
+        return response()->json("Type with the id of: " .$request->input('id')." was deleted.");
     }
 
     // protected function validateAttributes() {

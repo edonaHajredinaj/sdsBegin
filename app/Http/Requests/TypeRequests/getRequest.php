@@ -39,12 +39,12 @@ class getRequest extends FormRequest
     //     return $attributes;
     // }
 
-    public function all($keys = null)
-{
-    $data = parent::all($keys);
-    $data['id'] =  $this->route('id');
-    return $data;
-}
+//     public function all($keys = null)
+// {
+//     $data = parent::all($keys);
+//     $data['id'] =  $this->route('id');
+//     return $data;
+// }
 
     protected function failedValidation(Validator $validator)
     {

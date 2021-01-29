@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\TypeRequests;
+namespace App\Http\Requests\SaleRequests;
 
-use App\Type;
+use App\Product;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class updateRequest extends FormRequest
+class saveRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,8 +27,8 @@ class updateRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|numeric|exists:'.(new Type)->getTable().',id',
-            'type' => 'required|string|unique:types|min:3|max:200'
+            'product_id'  => 'required|numeric|exists:'.(new Product)->getTable().',id,deleted_at,NULL',
+            'quantity' => 'required|min:1|numeric',
         ];
     }
 
@@ -38,16 +38,15 @@ class updateRequest extends FormRequest
    
     }
 
-    public function messages()
-    {
+    public function messages() {
         return [
-            'id.required' => 'An id is required',
-            'id.numeric' => 'Id should be a number',
-            'id.exists' => 'Id does not exist',
+            'product_id.required' => 'A product id is required!',
+            'product_id.numeric' => 'Product id must be a number',
+            'product_id.exists' => 'Product id has been deleted!',
 
-            'type.required' => 'A type is required!',
-            'type.string' => 'Type has to be within a-z range!',
-            'type.unique' => 'Type cannot be a duplicate!',
+            'quantity.required' => 'Id of quantity is required!',
+            'quantity.numeric' => 'Quantity should be numeric!',
+            'quantity.min' => 'Error: Sales cannot be lower than 1!',
         ];
     }
 }
