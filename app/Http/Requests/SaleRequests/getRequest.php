@@ -3,7 +3,6 @@
 namespace App\Http\Requests\SaleRequests;
 
 use App\SaleProduct;
-//use App\Sale;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
