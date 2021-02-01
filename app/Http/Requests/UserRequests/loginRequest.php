@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Http\Requests\UserRequests;
+
+use App\User;
+use Illuminate\Foundation\Http\FormRequest;
+
+class loginRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'email' => 'required|string|email|unique:users|exists:'.(new User)->getTable().',email',
+            'password' => 'required|string|confirmed|min:6',
+        ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json($validator->errors(), 422));
+    }
+
+    public function messages()
+    {
+        return [
+            'email.required' => 'Email is required!',
+            'email.string' => 'Your email cannot be just a number or just a character !',
+            'email.email' => 'Email has to be in an email format ex. name@example.com',
+            'email.unique' => 'You email is a duplicate, choose another!',
+            'email.exists' => 'This email has not been registered',
+
+            'password.required' => 'Password is required',
+            'password.string' => 'Type id has to be a number!',
+            'password.confirmed' => 'You have not confirmed your password!',
+            'password.min' => 'Password cannot be less than 6!',
+
+        ];
+    }
+}
