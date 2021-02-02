@@ -19,10 +19,10 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login']]);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api', ['except' => ['login']]);
+    // }
 
     //public $loginAfterSignUp = true;
 
@@ -32,16 +32,26 @@ class AuthController extends Controller
      */
     public function register(registerRequest $request)
     {
-    //   $user = User::create([
-    //     'name' => $request->name,
-    //     'email' => $request->email,
-    //     'password' => bcrypt($request->password),
-    //   ]);
-        $user = new User();
-        $user->name = $request->name; 
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->save(); 
+      $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => bcrypt($request->password),
+      ]);
+        // $user = new User();
+        // $user->name = $request->name; 
+        // $user->email = $request->email;
+        // $user->password = bcrypt($request->password);
+        // $user->save(); 
+
+        // if ($this->token) {
+        //     return auth()->login($request);
+        // }
+
+        // return response()->json([
+        //     'success' => true,
+        //     'data' => $user,
+        //     'token' => $token
+        // ], Response::HTTP_OK);
 
         $token = auth()->login($user);
         return $this->respondWithToken($token);
@@ -56,13 +66,13 @@ class AuthController extends Controller
      */
     public function login(loginRequest $request)
     {
-        $credentials = request(['email', 'password']);
+        $credentials = $request->only(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'],401);
         }
 
-        return $this->respondWithToken($token);
+        return response()->json([$this->respondWithToken($token)]);
     }
 
     /**
@@ -109,7 +119,8 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => auth()->factory()->getTTL() * 60,
+            'user' => auth()->user()
         ]);
     }
 }

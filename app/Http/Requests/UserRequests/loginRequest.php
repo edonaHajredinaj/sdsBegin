@@ -4,6 +4,8 @@ namespace App\Http\Requests\UserRequests;
 
 use App\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class loginRequest extends FormRequest
 {
@@ -35,6 +37,7 @@ class loginRequest extends FormRequest
         throw new HttpResponseException(response()->json($validator->errors(), 422));
     }
 
+    //nese nuk osht regjistru email ska nevoj me dal qe sosht confirm as passi
     public function messages()
     {
         return [
@@ -42,7 +45,7 @@ class loginRequest extends FormRequest
             'email.string' => 'Your email cannot be just a number or just a character !',
             'email.email' => 'Email has to be in an email format ex. name@example.com',
             'email.unique' => 'You email is a duplicate, choose another!',
-            'email.exists' => 'This email has not been registered',
+            'email.exists' => 'Sorry, this email has not been registered, yet.',
 
             'password.required' => 'Password is required',
             'password.string' => 'Type id has to be a number!',
