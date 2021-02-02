@@ -28,7 +28,7 @@ class registerRequest extends FormRequest
         return [
             'name' => 'required|string|between:2,99',
             'email' => 'required|email|string|min:4|unique:users',
-            'password' => 'required|string|confirmed|min:6',
+            'password' => 'required|string|min:6',
         ];
     }
 
@@ -48,11 +48,11 @@ class registerRequest extends FormRequest
             'email.email' => 'Email has to be in an email format ex. name@example.com',
             'email.string' => 'Your email cannot be just a number or just a character !',
             'email.min' => 'Email cannot be less than 4 characters!',
-            'email.unique' => 'You email is a duplicate, choose another!',
+            'email.unique' => 'You email is a duplicate, pick another!',
 
             'password.required' => 'Password is required',
             'password.string' => 'Type id has to be a number!',
-            'password.confirmed' => 'You have not confirmed your password!',
+            //'password.confirmed' => 'You have not confirmed your password!',
             'password.min' => 'Password cannot be less than 6!',
 
         ];

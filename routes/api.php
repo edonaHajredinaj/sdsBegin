@@ -41,18 +41,16 @@ Route::post('sales', 'Sales@store');
 Route::put('sales', 'Sales@update');
 Route::delete('sales', 'Sales@delete');
 
+
 //$router = $this->app['router'];
 
 Route::group([
+    //'middleware' => 'auth.jwt', 
+    'prefix' => 'auth'], function () {
 
-    'middleware' => 'auth',
-    //'prefix' => 'auth'
-
-], function ($router) {
-
-    Route::post('register', 'AuthController@register');
-    Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
+        Route::post('register', 'AuthController@register');
+        Route::post('login', 'AuthController@login');
+        Route::post('logout', 'AuthController@logout');
+        Route::post('refresh', 'AuthController@refresh');
+        Route::post('me', 'AuthController@me');
 });
