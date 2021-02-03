@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserRequests\loginRequest;
 use App\Http\Requests\UserRequests\registerRequest;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -32,16 +33,16 @@ class AuthController extends Controller
      */
     public function register(registerRequest $request)
     {
-      $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => bcrypt($request->password),
-      ]);
-        // $user = new User();
-        // $user->name = $request->name; 
-        // $user->email = $request->email;
-        // $user->password = bcrypt($request->password);
-        // $user->save(); 
+    //   $user = User::create([
+    //     'name' => $request->name,
+    //     'email' => $request->email,
+    //     'password' => bcrypt($request->password),
+    //   ]);
+        $user = new User();
+        $user->name = $request->name; 
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->save(); 
 
         // if ($this->token) {
         //     return auth()->login($request);
@@ -69,7 +70,7 @@ class AuthController extends Controller
         $credentials = $request->only(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'],401);
+            return response()->json(['error' => 'Incorrect email/password'],401);
         }
 
         return response()->json([$this->respondWithToken($token)]);
@@ -104,7 +105,16 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        //return = $this->respondWithToken(auth()->refresh());
+
+        try {
+            $newToken = $this->respondWithToken(auth()->refresh());
+        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+            return response()->json(['error' => $e->getMessage()], 401);
+            //throw $e;
+        }
+        
+        return response()->json(['token' => $newToken]);
     }
 
     /**

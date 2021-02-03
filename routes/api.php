@@ -46,7 +46,8 @@ Route::delete('sales', 'Sales@delete');
 
 Route::group([
     //'middleware' => 'auth.jwt', 
-    'prefix' => 'auth'], function () {
+    'prefix' => 'auth'
+], function () {
 
         Route::post('register', 'AuthController@register');
         Route::post('login', 'AuthController@login');

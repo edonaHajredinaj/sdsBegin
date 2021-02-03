@@ -18,9 +18,15 @@ class Types extends Controller {
         return Type::all();
     }
 
-    public function get(getRequest $request, $id) {
-
-        return Type::findOrFail($request->input('id'));
+    public function get(getRequest $request, $id) 
+    {
+        try {
+            $types = Type::findOrFail($request->input('id'));
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+        
+        return json_encode($types);
     }
 
     public function store(addRequest $request) {
