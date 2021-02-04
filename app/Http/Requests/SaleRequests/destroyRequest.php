@@ -27,7 +27,7 @@ class destroyRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|numeric|exists:'.(new SaleProduct)->getTable().',id,deleted_at,NULL'
+            'id' => 'bail|required|numeric|exists:'.(new SaleProduct)->getTable().',id,deleted_at,NULL'
         ];
     }
 

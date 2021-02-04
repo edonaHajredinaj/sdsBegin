@@ -20,14 +20,16 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            //$table->string('username')->unique(); // nese user nuk e shkrun 'username', atehere do t'i zgjidhet nje emer random unique name.
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('role', 100)->nullable();
-            $table->enum('gender', ['f', 'm']);
-            $table->date('birthdate')->nullable();
+            //$table->enum('gender', ['f', 'm'])->default('f');
+            //$table->date('birthdate')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

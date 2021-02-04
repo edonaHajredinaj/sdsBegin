@@ -28,7 +28,7 @@ class addRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'required|unique:types|min:3|max:200'
+            'type' => 'bail|required|unique:types|min:3|max:200'
         ];
     }
 

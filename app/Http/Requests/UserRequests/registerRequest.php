@@ -27,8 +27,8 @@ class registerRequest extends FormRequest
     {
         return [
             'name' => 'required|string|between:2,99',
-            'email' => 'required|email|string|min:4|unique:users',
-            'password' => 'required|string|min:6',
+            'email' => 'bail|required|email|string|min:4|unique:users',
+            'password' => 'bail|required|string|min:5',
         ];
     }
 
@@ -53,7 +53,7 @@ class registerRequest extends FormRequest
             'password.required' => 'Password is required',
             'password.string' => 'Type id has to be a number!',
             //'password.confirmed' => 'You have not confirmed your password!',
-            'password.min' => 'Password cannot be less than 6!',
+            'password.min' => 'Password cannot be less than 5!',
 
         ];
     }

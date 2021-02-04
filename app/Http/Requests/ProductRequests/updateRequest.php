@@ -29,7 +29,7 @@ class updateRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|numeric|exists:'.(new Product)->getTable().',id,deleted_at,NULL',
+            'id' => 'bail|required|numeric|exists:'.(new Product)->getTable().',id,deleted_at,NULL',
             'name' => 'required|string|unique:products',
             'type_id' => 'required|numeric|exists:'.(new Type)->getTable().',id',
             'price' => 'required|numeric'

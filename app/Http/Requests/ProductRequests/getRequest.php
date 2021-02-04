@@ -27,7 +27,7 @@ class getRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|numeric|exists:'.(new Product)->getTable().',id,deleted_at,NULL'
+            'id' => 'bail|required|numeric|exists:'.(new Product)->getTable().',id,deleted_at,NULL'
            //Rule::exists('products', 'id')->whereNull('deleted_at')' //dis doesnt werk werk werk
         ];
     }

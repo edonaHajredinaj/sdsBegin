@@ -27,9 +27,9 @@ class addRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'unique:products', 'string', 'min:3', 'max:200'],
-            'type_id' => 'required|numeric|exists:'.(new Type)->getTable().',id',
-            'price' => 'required|numeric',
+            'name' => ['bail|required', 'unique:products', 'string', 'min:3', 'max:200'],
+            'type_id' => 'bail|required|numeric|exists:'.(new Type)->getTable().',id',
+            'price' => 'bail|required|numeric',
         ];
     }
 

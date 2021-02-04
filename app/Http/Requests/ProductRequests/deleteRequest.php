@@ -27,7 +27,7 @@ class deleteRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|numeric|exists:'.(new Product)->getTable().',id,deleted_at,NULL'
+            'id' => 'bail|required|numeric|exists:'.(new Product)->getTable().',id,deleted_at,NULL'
         ];
     }
 
