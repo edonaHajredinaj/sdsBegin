@@ -28,8 +28,8 @@ class updateRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|numeric|exists:'.(new Stock)->getTable().',id,deleted_at,NULL',
-            'product_id'  => 'required|numeric|exists:'.(new Product)->getTable().',id,deleted_at,NULL',
+            'id' => 'bail|required|numeric|exists:'.(new Stock)->getTable().',id,deleted_at,NULL',
+            'product_id'  => 'bail|required|numeric|exists:'.(new Product)->getTable().',id,deleted_at,NULL',
             'quantity' => 'required|numeric|min:0',
         ];
     }

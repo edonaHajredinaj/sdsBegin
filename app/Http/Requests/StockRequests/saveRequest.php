@@ -27,8 +27,8 @@ class saveRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_id'  => 'required|unique:stocks|numeric|exists:'.(new Product)->getTable().',id,deleted_at,NULL',
-            'quantity' => 'required|numeric|min:0',
+            'product_id'  => 'bail|required|unique:stocks|numeric|exists:'.(new Product)->getTable().',id,deleted_at,NULL',
+            'quantity' => 'bail|required|numeric|min:0',
         ];
     }
 

@@ -27,8 +27,8 @@ class loginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|string|email|unique:users|exists:'.(new User)->getTable().',email',
-            'password' => 'required|string|confirmed|min:6',
+            'email' => 'bail|required|string|email|unique:users|exists:'.(new User)->getTable().',email,deleted_at,NULL',
+            'password' => 'bail|required|string|confirmed|min:5',
         ];
     }
 
@@ -50,7 +50,7 @@ class loginRequest extends FormRequest
             'password.required' => 'Password is required',
             'password.string' => 'Type id has to be a number!',
             'password.confirmed' => 'You have not confirmed your password!',
-            'password.min' => 'Password cannot be less than 6!',
+            'password.min' => 'Password cannot be less than 5!',
 
         ];
     }

@@ -27,8 +27,8 @@ class updateRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|numeric|exists:'.(new Type)->getTable().',id',
-            'type' => 'required|string|unique:types|min:3|max:200'
+            'id' => 'bail|required|numeric|exists:'.(new Type)->getTable().',id',
+            'type' => 'bail|required|string|unique:types|min:3|max:200'
         ];
     }
 

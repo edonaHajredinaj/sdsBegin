@@ -19,8 +19,10 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $fillable = [
         'name', 
-        'email', 
+        'email',
+        'username',
         'password',
+        'role',
     ];
 
     /**
@@ -32,6 +34,8 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'remember_token',
     ];
+
+    //'role',
 
     /**
      * The attributes that should be cast to native types.
